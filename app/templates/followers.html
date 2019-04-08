@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+{% block title %}SBMS - Following{% endblock %}
+{% block page_content %}
+<div class="page-header">
+    {%if user==current_user:%}
+    <h2>{{title}} you</h2>
+    {%else%}
+        <h2>{{title}} {{user.username}}</h2>
+    {%endif%}
+    {% if follows:%}
+    <table class="table table-hover follower">
+        <thead><tr><th>User</th><th>Since</th></tr></thead>
+        {% for follow in follows %}
+        {% if follow.user != user %}
+        <tr>
+            <td>
+                <a href="{{ url_for('.user', name = follow.user.username) }}">
+                    <img class="img-rounded" src="{{ follow.user.gravatar(size=32) }}">
+                    {{ follow.user.username }}
+                </a>
+            </td>
+            <td>{{ moment(follow.timestamp).format('L') }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+    {%else%}
+    <p>No followers at the moment. Please be active on the platform to maximize you socials</p>
+    {%endif%}
+    <div class="pagination">
+        {{ macros.pagination_widget(pagination, endpoint, username=user.username ) }}
+    </div>  
+</div>
+
+{% endblock %}

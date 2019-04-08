@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf%}
+{% block title%}SBMS miniblog{%endblock%}
+
+{%block page_content%}
+
+<div class="page-header">
+    
+        <h1>Hello, {{current_user.username}}
+        </h1>
+        <h2>Edit your Profile</h2> 
+       
+</div>
+{{wtf.quick_form(form)}}
+{%endblock%}
+
